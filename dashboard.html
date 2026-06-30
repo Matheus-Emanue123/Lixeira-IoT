@@ -9,16 +9,13 @@
 </head>
 <body>
 
-<!-- ── Header ──────────────────────────────────────────────────── -->
 <header>
   <div class="header-left">
     <svg class="logo-icon" viewBox="0 0 36 36" fill="none">
       <rect width="36" height="36" rx="8" fill="#161B22" stroke="#21262D"/>
-      <!-- lixeira estilizada -->
       <rect x="10" y="14" width="16" height="14" rx="2" fill="none" stroke="#7FBA00" stroke-width="1.5"/>
       <path d="M8 14h20" stroke="#7FBA00" stroke-width="1.5" stroke-linecap="round"/>
       <path d="M15 14v-3h6v3" stroke="#7FBA00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- aleta / seta -->
       <path d="M18 17v7M15 21l3 3 3-3" stroke="#3D5A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <div>
@@ -32,7 +29,6 @@
   </div>
 </header>
 
-<!-- ── Banner de Alertas ────────────────────────────────────────── -->
 <div id="alerta-banner">
   <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
     <path d="M8 1L1 13h14L8 1zm0 2.5L13.5 12h-11L8 3.5zM7.25 7v3h1.5V7h-1.5zm0 4v1.5h1.5V11h-1.5z"/>
@@ -40,20 +36,16 @@
   <span id="alerta-msg">—</span>
 </div>
 
-<!-- ── Main grid ─────────────────────────────────────────────────── -->
 <main>
 
-  <!-- Gauge principal: nível médio da lixeira -->
   <div class="card gauge-wrap">
     <div class="card-label">Ocupação Média</div>
     <div class="gauge-container">
       <svg class="gauge-svg" viewBox="0 0 200 120">
-        <!-- Track -->
         <path id="gauge-track" class="gauge-track"
           d="M 30 105 A 70 70 0 0 1 170 105"
           stroke-dasharray="220 220"
           stroke-dashoffset="0"/>
-        <!-- Fill -->
         <path id="gauge-fill" class="gauge-fill"
           d="M 30 105 A 70 70 0 0 1 170 105"
           stroke="#7FBA00"
@@ -68,7 +60,6 @@
     <div class="gauge-caption" id="gauge-caption">aguardando dados...</div>
   </div>
 
-  <!-- Barras de nível por compartimento -->
   <div class="card niveis-card">
     <div class="card-label">Nível por Compartimento</div>
 
@@ -93,7 +84,6 @@
     </div>
   </div>
 
-  <!-- Stats rápidos -->
   <div class="stat-grid">
     <div class="stat-card">
       <div class="stat-value" id="stat-total">—</div>
@@ -109,7 +99,6 @@
     </div>
   </div>
 
-  <!-- Leitura em tempo real dos sensores -->
   <div class="card sensor-card">
     <div class="sensor-item">
       <div class="sensor-val" id="sensor-umid">—<span class="sensor-unit">%</span></div>
@@ -125,7 +114,6 @@
     </div>
   </div>
 
-  <!-- Feed de eventos -->
   <div class="card feed-card">
     <div class="card-label">Eventos Recentes</div>
     <ul class="feed-list" id="feed-list">
@@ -139,7 +127,6 @@
 
 </main>
 
-<!-- ── Controles remotos ─────────────────────────────────────────── -->
 <footer class="controls">
   <span class="controls-label">Controles</span>
   <button class="btn btn-trava"  id="btn-travar"  onclick="enviarCmd('travar')"  disabled>⬛ Travar</button>
@@ -152,6 +139,33 @@
     <button class="btn-reconectar" onclick="reconectar()">Conectar</button>
   </div>
 </footer>
+
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCAskPPMRz-tkDqRIctCT_6CSEnTtmdXEg",
+    authDomain: "lixoiot.firebaseapp.com",
+    projectId: "lixoiot",
+    storageBucket: "lixoiot.firebasestorage.app",
+    messagingSenderId: "108109022081",
+    appId: "1:108109022081:web:e3fbf108f895ded6a11e80",
+    measurementId: "G-WSBFBJGXEM",
+    databaseURL: "https://lixoiot-default-rtdb.firebaseio.com"
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  window.db = database;
+  window.dbRef = ref;
+  window.dbPush = push;
+  window.dbSet = set;
+</script>
 
 <script src="script.js"></script>
 </body>
